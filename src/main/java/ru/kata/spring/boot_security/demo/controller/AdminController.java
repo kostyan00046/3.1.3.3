@@ -10,13 +10,13 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @Controller
-@RequestMapping("/admin") // Общий префикс для всех эндпоинтов (п.9)
+@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
     private final RoleService roleService;
 
-    // PasswordEncoder удален из контроллера (п.7)
+
     public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
@@ -34,33 +34,33 @@ public class AdminController {
         modelAndView.addObject("userList", userService.getAllUsers());
         modelAndView.addObject("allRoles", roleService.getAllRoles());
 
-        return modelAndView; // Возвращаем ModelAndView (п.8)
+        return modelAndView;
     }
 
     @DeleteMapping
-    public ModelAndView deleteUser(@RequestParam("id") int id) { // RequestParam вместо PathVariable (п.10)
+    public ModelAndView deleteUser(@RequestParam("id") int id) {
         userService.removeUserById(id);
         return new ModelAndView("redirect:/admin");
     }
 
     @PostMapping
     public ModelAndView createUser(@ModelAttribute("newUser") User user) {
-        userService.addUser(user); // Кодирование пароля внутри сервиса (п.7)
+        userService.addUser(user);
         return new ModelAndView("redirect:/admin");
     }
 
     @PatchMapping
     public ModelAndView updateUser(
             @ModelAttribute("userEdit") User userEdit,
-            @RequestParam("id") int id) { // RequestParam вместо PathVariable (п.10)
+            @RequestParam("id") int id) {
 
-        userService.updateUser(id, userEdit); // Вся логика внутри сервиса (п.7)
+        userService.updateUser(id, userEdit);
         return new ModelAndView("redirect:/admin");
     }
 
     @GetMapping("/findUser")
     @ResponseBody
-    public User findUser(@RequestParam("id") Integer id) { // RequestParam вместо PathVariable (п.10)
+    public User findUser(@RequestParam("id") Integer id) {
         return userService.getUserById(id);
     }
 }

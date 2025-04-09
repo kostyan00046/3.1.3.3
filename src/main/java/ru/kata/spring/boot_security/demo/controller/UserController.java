@@ -16,7 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // Внедрение зависимости через конструктор
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -25,11 +25,11 @@ public class UserController {
     public ModelAndView getUser(@RequestParam(value = "id", required = false) Integer id) {
         ModelAndView modelAndView = new ModelAndView("user");
 
-        // Если ID указан - получаем пользователя по ID
+
         if (id != null) {
             modelAndView.addObject("user", userService.getUserById(id));
         }
-        // Если ID не указан - получаем текущего аутентифицированного пользователя
+
         else {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User currentUser = (User) auth.getPrincipal();
