@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+# Исключаем папку .mvn/wrapper
+.mvn/wrapper/
+
+# Исключаем папку .idea
+.idea/
